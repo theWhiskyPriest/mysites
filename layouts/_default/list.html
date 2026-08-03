@@ -1,0 +1,18 @@
+{{ define "main" }}
+<section class="page-head">
+  <h1>{{ .Title }}</h1>
+  {{ with .Content }}<div class="page-intro">{{ . }}</div>{{ end }}
+</section>
+
+<ul class="post-list">
+  {{- range .Pages.ByDate.Reverse }}
+  <li class="post-item">
+    <a class="post-link" href="{{ .RelPermalink }}">{{ .Title }}</a>
+    <time class="post-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006-01-02" }}</time>
+    {{- with .Summary }}<p class="post-summary">{{ . | plainify | truncate 120 }}</p>{{ end }}
+  </li>
+  {{- else }}
+  <li class="empty">还没有长文，用 <code>hugo new posts/xxx.md</code> 写一篇。</li>
+  {{- end }}
+</ul>
+{{ end }}

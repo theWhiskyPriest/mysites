@@ -1,0 +1,50 @@
+# 网站基本信息 —— 部署到 GitHub Pages 前把 baseURL 改成你的真实地址
+baseURL: "https://USERNAME.github.io/"
+languageCode: "zh-cn"
+title: "Henry 的小站"
+
+# 时区，影响说说/文章的时间显示
+timeZone: "Asia/Shanghai"
+
+# 关闭默认的 taxonomy（标签/分类页），保持简单；以后想要再打开
+disableKinds:
+  - taxonomy
+  - term
+
+# 导航菜单
+menu:
+  main:
+    - name: "时间线"
+      pageRef: /
+      weight: 1
+    - name: "说说"
+      pageRef: /notes
+      weight: 2
+    - name: "长文"
+      pageRef: /posts
+      weight: 3
+    - name: "关于"
+      pageRef: /about
+      weight: 4
+
+# 分页：首页说说时间线每页显示多少条
+pagination:
+  pagerSize: 20
+
+# 自定义参数
+params:
+  # 打开后，全站输出 noindex，搜索引擎不收录（配合 static/robots.txt）
+  noindex: true
+  # 页脚署名
+  author: "Henry"
+  description: "个人碎碎念与长文：云开终见月，水到自然成。"
+
+markup:
+  goldmark:
+    renderer:
+      # 允许在 Markdown 里写原始 HTML
+      unsafe: true
+  highlight:
+    style: github
+    lineNos: false
+    noClasses: false

@@ -1,0 +1,54 @@
+{{ define "main" }}
+<section class="page-head">
+  <h1>{{ .Title }}</h1>
+  {{ with .Content }}<div class="page-intro">{{ . }}</div>{{ end }}
+</section>
+
+<section class="notes-simple">
+  {{- $paginator := .Paginate .Pages.ByDate.Reverse }}
+
+  {{- range $index, $page := $paginator.Pages }}
+    {{- $currentDate := $page.Date.Format "2006-01-02" }}
+    {{- $prevDate := "" }}
+    {{- if gt $index 0 }}
+      {{- $prevPage := index $paginator.Pages (sub $index 1) }}
+      {{- $prevDate = $prevPage.Date.Format "2006-01-02" }}
+    {{- end }}
+
+    {{- if ne $currentDate $prevDate }}
+  <div class="notes-day">
+    <h2 class="notes-date">{{ $page.Date.Format "2006年1月2日" }}</h2>
+    {{- end }}
+
+    <article class="note-simple">
+      <div class="note-body">
+        {{ $page.Content }}
+      </div>
+      <div class="note-meta">
+        <time datetime="{{ $page.Date.Format "2006-01-02T15:04:05Z07:00" }}">
+          {{ $page.Date.Format "15:04" }}
+        </time>
+      </div>
+    </article>
+
+    {{- $nextDate := "" }}
+    {{- if lt $index (sub (len $paginator.Pages) 1) }}
+      {{- $nextPage := index $paginator.Pages (add $index 1) }}
+      {{- $nextDate = $nextPage.Date.Format "2006-01-02" }}
+    {{- end }}
+    {{- if or (ne $currentDate $nextDate) (eq $index (sub (len $paginator.Pages) 1)) }}
+  </div>
+    {{- end }}
+  {{- else }}
+  <p class="empty">还没有说说。</p>
+  {{- end }}
+
+  {{- if gt $paginator.TotalPages 1 }}
+  <nav class="pager">
+    {{- if $paginator.HasPrev }}<a href="{{ $paginator.Prev.URL }}">← 更新</a>{{ end }}
+    <span>{{ $paginator.PageNumber }} / {{ $paginator.TotalPages }}</span>
+    {{- if $paginator.HasNext }}<a href="{{ $paginator.Next.URL }}">更早 →</a>{{ end }}
+  </nav>
+  {{- end }}
+</section>
+{{ end }}

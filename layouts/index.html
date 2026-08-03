@@ -1,0 +1,77 @@
+{{ define "main" }}
+<section class="intro">
+  <p>{{ .Site.Params.description }}</p>
+</section>
+
+<section class="timeline">
+  {{- $notes := where .Site.RegularPages "Section" "notes" }}
+  {{- $posts := where .Site.RegularPages "Section" "posts" }}
+  {{- $all := union $notes $posts }}
+  {{- $all = $all.ByDate.Reverse }}
+  {{- $paginator := .Paginate $all }}
+
+  {{- range $index, $page := $paginator.Pages }}
+    {{- $currentDate := $page.Date.Format "2006-01-02" }}
+    {{- $prevDate := "" }}
+    {{- if gt $index 0 }}
+      {{- $prevPage := index $paginator.Pages (sub $index 1) }}
+      {{- $prevDate = $prevPage.Date.Format "2006-01-02" }}
+    {{- end }}
+
+    {{- if ne $currentDate $prevDate }}
+  <div class="timeline-day">
+    <div class="timeline-date">
+      <div class="timeline-marker date-marker"></div>
+      <time datetime="{{ $page.Date.Format "2006-01-02" }}">
+        {{ $page.Date.Format "2006年1月2日" }}
+      </time>
+    </div>
+    {{- end }}
+
+    <article class="timeline-item {{ $page.Section }}">
+      <div class="timeline-marker"></div>
+      <div class="timeline-content">
+        {{- if eq $page.Section "posts" }}
+        <div class="timeline-header">
+          <a class="timeline-title" href="{{ $page.RelPermalink }}">{{ $page.Title }}</a>
+          <time datetime="{{ $page.Date.Format "2006-01-02T15:04:05Z07:00" }}">
+            {{ $page.Date.Format "15:04" }}
+          </time>
+        </div>
+        <div class="timeline-body">
+          {{ $page.Summary | plainify | truncate 200 }}
+        </div>
+        {{- else }}
+        <div class="timeline-body">
+          {{ $page.Content }}
+        </div>
+        <div class="timeline-meta">
+          <time datetime="{{ $page.Date.Format "2006-01-02T15:04:05Z07:00" }}">
+            {{ $page.Date.Format "15:04" }}
+          </time>
+        </div>
+        {{- end }}
+      </div>
+    </article>
+
+    {{- $nextDate := "" }}
+    {{- if lt $index (sub (len $paginator.Pages) 1) }}
+      {{- $nextPage := index $paginator.Pages (add $index 1) }}
+      {{- $nextDate = $nextPage.Date.Format "2006-01-02" }}
+    {{- end }}
+    {{- if or (ne $currentDate $nextDate) (eq $index (sub (len $paginator.Pages) 1)) }}
+  </div>
+    {{- end }}
+  {{- else }}
+  <p class="empty">还没有内容，开始写点什么吧。</p>
+  {{- end }}
+
+  {{- if gt $paginator.TotalPages 1 }}
+  <nav class="pager">
+    {{- if $paginator.HasPrev }}<a href="{{ $paginator.Prev.URL }}">← 更新</a>{{ end }}
+    <span>{{ $paginator.PageNumber }} / {{ $paginator.TotalPages }}</span>
+    {{- if $paginator.HasNext }}<a href="{{ $paginator.Next.URL }}">更早 →</a>{{ end }}
+  </nav>
+  {{- end }}
+</section>
+{{ end }}
