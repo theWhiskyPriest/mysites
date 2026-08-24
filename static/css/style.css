@@ -326,6 +326,49 @@ a { color: var(--accent); }
   color: var(--muted);
 }
 
+/* 移动端：收窄左侧时间轴，让内容尽量占满屏幕 */
+@media (max-width: 600px) {
+  .timeline {
+    padding-left: 30px;
+  }
+
+  .timeline::before {
+    left: 10px;
+  }
+
+  .timeline-date {
+    min-height: 0;
+    margin-bottom: 12px;
+  }
+
+  .timeline-date time {
+    position: static;
+    display: block;
+    width: auto;
+    text-align: left;
+    font-size: 13px;
+    line-height: 1.4;
+    margin-bottom: 10px;
+  }
+
+  .timeline-date .date-marker {
+    left: -28px;
+  }
+
+  .timeline-marker {
+    left: -24px;
+  }
+
+  .timeline-content {
+    padding: 14px;
+  }
+
+  .timeline-header,
+  .note-details summary {
+    gap: 8px;
+  }
+}
+
 /* pager */
 .pager {
   display: flex;
