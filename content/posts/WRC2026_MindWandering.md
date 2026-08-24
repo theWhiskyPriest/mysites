@@ -1,5 +1,5 @@
 ---
-title: "WRC 2026Mind Wandering"
+title: "WRC 2026 Mind Wandering"
 date: 2026-08-24T14:55:41+08:00
 draft: false
 ---
