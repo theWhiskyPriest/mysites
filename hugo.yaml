@@ -38,6 +38,10 @@ params:
   # 页脚署名
   author: "Henry"
   description: "个人碎碎念与长文：云开终见月，水到自然成。"
+  # 打开后用「不蒜子」统计访问量：页脚显示全站访问/访客数，长文页显示单页阅读数
+  busuanzi: true
+  # 不蒜子脚本地址。官方源(busuanzi.ibruce.info)常年不稳，默认用较稳的镜像；失效时换这里即可
+  busuanziSrc: "https://cdn.jsdelivr.net/gh/soxft/busuanzi-cdn@master/busuanzi.pure.mini.js"
 
 markup:
   goldmark:

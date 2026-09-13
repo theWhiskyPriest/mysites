@@ -29,7 +29,18 @@
   <footer class="site-footer">
     <div class="wrap">
       <span>© {{ now.Year }} {{ .Site.Params.author | default .Site.Title }}</span>
+      {{- if .Site.Params.busuanzi }}
+      <span class="site-stats" id="busuanzi_container_site_pv" style="display:none">
+        · 访问 <span id="busuanzi_value_site_pv"></span> 次
+      </span>
+      <span class="site-stats" id="busuanzi_container_site_uv" style="display:none">
+        · 访客 <span id="busuanzi_value_site_uv"></span> 人
+      </span>
+      {{- end }}
     </div>
   </footer>
+  {{- if .Site.Params.busuanzi }}
+  <script async src="{{ .Site.Params.busuanziSrc | default "https://cdn.jsdelivr.net/gh/soxft/busuanzi-cdn@master/busuanzi.pure.mini.js" }}"></script>
+  {{- end }}
 </body>
 </html>
